@@ -1,7 +1,6 @@
 package com.example.fileuploaderproject.controller;
 
 import com.example.fileuploaderproject.service.StorageService;
-import com.example.fileuploaderproject.service.StorageServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLOutput;
+
 
 @RequiredArgsConstructor
 @RequestMapping("/api/files")
@@ -30,10 +29,11 @@ public class StorageController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("File size exceeds the maximum limit of 10MB");
         }
-
         try {
             String fileHash = minioService.generateFileHash(file);
             System.out.println("File hash: " + fileHash);
+            System.out.println("Original file name: " + file.getOriginalFilename());
+            System.out.println("File name:" + file.getName());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
